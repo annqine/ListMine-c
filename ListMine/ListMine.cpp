@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <string>
 
 typedef void* LISTPOSITION;
 
@@ -311,10 +312,20 @@ void ShowBusParkMenu(BusPark& busPark) {
             std::cout << "Enter details for the new bus:\n";
             std::cout << "Bus Number: ";
             std::cin >> newBusNumber;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
             std::cout << "Driver Name: ";
-            std::cin >> newDriverName;
+            std::getline(std::cin, newDriverName);
+
             std::cout << "Route Number: ";
-            std::cin >> newRouteNumber;
+
+            while (!(std::cin >> newRouteNumber)) {
+                std::cin.clear(); 
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+                std::cout << "Invalid input. Enter a numeric value for Route Number: ";
+            }
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
             busPark.AddTail(Bus(newBusNumber, newDriverName, newRouteNumber));
             std::cout << "Bus added successfully.\n";
             break;
